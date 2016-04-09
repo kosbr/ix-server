@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * Thread for accepting clients. After client is accepted it creates ans starts new instance of {@link ClientThread} <br/>
  * Created by Константин on 08.04.2016.
  */
 public class AcceptThread extends Thread {

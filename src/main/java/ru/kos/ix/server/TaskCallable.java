@@ -8,6 +8,11 @@ import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
 /**
+ * Callable that represents task running. <Br/>
+ * The main goal of this callable is to run task.methodName of task.serviceName with task.arguments <br/>
+ * If all arguments are not null, it is possible to use standard reflection getMethod(String name, Class<?>... parameterTypes) method.  <br/>
+ * If some argument is null, it is impossible to detect its type, so the one way to find method is browse all class methods with
+ * such name and number of params and check if task's args are applicable to analysing method.
  * Created by Константин on 08.04.2016.
  */
 public class TaskCallable implements Callable<AnsTask> {

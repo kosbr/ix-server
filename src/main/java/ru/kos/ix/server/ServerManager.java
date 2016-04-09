@@ -12,6 +12,15 @@ import java.net.ServerSocket;
 import java.util.Properties;
 
 /**
+ * Main class of the application. It configures server and starts it. <br/>
+ * The lifecycle of server: <br/>
+ * 1)Read configuration from server.properties <Br/>
+ * 2)Create service instances according to service.* lines of properties  <br/>
+ * 3)Prepare {@link ClientSocketHolder} <br/>
+ * 4)Run server <br/>
+ * 5)When active param in status.file (server.properties) becomes not true, server starts prepare shutdown <br/>
+ * 6)Close all open client sockets <Br/>
+ * 7)Stop server <Br/>
  * Created by Константин on 08.04.2016.
  */
 public class ServerManager {
@@ -22,6 +31,11 @@ public class ServerManager {
 
     private Properties properties;
 
+    /**
+     * Main method of the application. First param is server listening port.
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         int port = Integer.parseInt(args[0]);
         InputStream inputStream  = ServiceHolder.class.getClassLoader().getResourceAsStream("server.properties");
@@ -39,6 +53,11 @@ public class ServerManager {
         this.properties = properties;
     }
 
+    /**
+     * Starts server. Creates and starts {@link AcceptThread}. Starts monitoring of event to shutdown.
+     * @param port
+     * @throws IOException
+     */
     public void startServer(int port) throws IOException {
         ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName("localhost"));
         logger.info("server is started port " + port);
@@ -60,6 +79,12 @@ public class ServerManager {
         serverSocket.close();
     }
 
+    /**
+     * Check if server must start prepare to shutdown
+     * @param statusFile
+     * @return
+     * @throws IOException
+     */
     private boolean isWorking(String statusFile) throws IOException {
         InputStream inputStream = new FileInputStream(statusFile);
         Properties properties = new Properties();

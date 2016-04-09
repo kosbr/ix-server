@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * Thread that belongs to one client. It waits requests and delegates tasks to other threads.
  * Created by Константин on 08.04.2016.
  */
 public class ClientThread extends Thread {
@@ -29,6 +30,12 @@ public class ClientThread extends Thread {
 
     private ExecutorService executorService;
 
+    /**
+     * Creates client thread
+     * @param clientId ClientId
+     * @param socket Client socket
+     * @param executorService Executor service for task threads
+     */
     public ClientThread(int clientId, Socket socket, ExecutorService executorService) {
         this.clientId = clientId;
         this.socket = socket;
