@@ -37,7 +37,7 @@ public class ServerManager {
         this.properties = properties;
     }
 
-    public void startServer() throws IOException, InterruptedException {
+    public void startServer() throws IOException {
         ServerSocket serverSocket = new ServerSocket(3129, 0, InetAddress.getByName("localhost"));
         logger.info("server is started");
         AcceptThread acceptThread = new AcceptThread(serverSocket);
@@ -49,8 +49,8 @@ public class ServerManager {
             while (isWorking(statusFile)) {
                 Thread.sleep(500);
             }
-        } catch (IOException e) {
-            logger.error("Can't read server.properties");
+        } catch (IOException | InterruptedException e) {
+            logger.error("Can't read server.properties " + e.getMessage());
         }
 
         logger.info("server is stopped");
