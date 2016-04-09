@@ -13,12 +13,14 @@ public class AnsTask implements Serializable {
 
     private Integer id;
     private Object result;
-    private String status;
+    private String statusInfo;
+    private Status status;
 
-    public AnsTask(Integer id, Object result, String status) {
+    public AnsTask(Integer id, Object result, Status status, String statusInfo) {
         this.id = id;
         this.result = result;
         this.status = status;
+        this.statusInfo = statusInfo;
     }
 
     public Integer getId() {
@@ -29,8 +31,12 @@ public class AnsTask implements Serializable {
         return result;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
+    }
+
+    public String getStatusInfo() {
+        return statusInfo;
     }
 
     @Override
@@ -39,6 +45,7 @@ public class AnsTask implements Serializable {
                 .add("id", id)
                 .add("result", result)
                 .add("status", status)
+                .add("statusInfo", statusInfo)
                 .toString();
     }
 }

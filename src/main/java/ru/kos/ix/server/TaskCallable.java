@@ -1,6 +1,7 @@
 package ru.kos.ix.server;
 
 import ru.kos.ix.dto.AnsTask;
+import ru.kos.ix.dto.Status;
 import ru.kos.ix.dto.Task;
 
 import java.lang.reflect.Method;
@@ -35,7 +36,7 @@ public class TaskCallable implements Callable<AnsTask> {
         }
         Object result = method.invoke(service, task.getArguments());
         boolean isVoid = method.getAnnotatedReturnType().getType() == Void.TYPE;
-        return new AnsTask(task.getId(), result, "ok " + (isVoid ? "(void)" : ""));
+        return new AnsTask(task.getId(), result, isVoid ? Status.OK_VOID : Status.OK, null);
     }
 
     private boolean hasNullArgument(Object[] arguments) {

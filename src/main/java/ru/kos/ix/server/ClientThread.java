@@ -6,6 +6,7 @@ import com.google.common.util.concurrent.ListenableFutureTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.kos.ix.dto.AnsTask;
+import ru.kos.ix.dto.Status;
 import ru.kos.ix.dto.Task;
 
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class ClientThread extends Thread {
                         synchronized (os) {
                             logger.error("Service error: " + t.getMessage(), t);
                             try {
-                                AnsTask ansTask = new AnsTask(task.getId(), null, "Error: " + t.getMessage());
+                                AnsTask ansTask = new AnsTask(task.getId(), null, Status.ERROR, t.getMessage());
                                 logger.info("Answer " + ansTask + " to client " + clientId);
                                 os.writeObject(ansTask);
                                 os.flush();
