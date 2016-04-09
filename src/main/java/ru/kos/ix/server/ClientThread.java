@@ -38,7 +38,7 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
-        logger.info("Start thread for client" + clientId);
+        logger.debug("Start thread for client" + clientId);
         try {
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
@@ -81,13 +81,13 @@ public class ClientThread extends Thread {
                     }
                 });
                 executorService.execute(future);
-                logger.info("Waiting for new tasks from client" + clientId);
+                logger.debug("Waiting for new tasks from client" + clientId);
             }
         } catch (Exception e) {
-            logger.info("Possible client has closed connection or server is stopping: " + e.getMessage());
+            logger.warn("Possible client has closed connection or server is stopping: " + e.getMessage());
         } finally {
             try {
-                logger.info("Close socket for client " + clientId);
+                logger.debug("Close socket for client " + clientId);
                 socket.close();
                 ClientSocketHolder.getInstance().remove(clientId);
             } catch (IOException e) {

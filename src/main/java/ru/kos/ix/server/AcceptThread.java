@@ -27,7 +27,7 @@ public class AcceptThread extends Thread {
         int currentClientId = 0;
         ExecutorService executorService = Executors.newCachedThreadPool();
         try {
-            logger.info("Start accepting");
+            logger.debug("Start accepting");
             while(true)
             {
                 Socket clientSocket = serverSocket.accept();
@@ -37,7 +37,7 @@ public class AcceptThread extends Thread {
                 currentClientId++;
             }
         } catch (IOException e) {
-            logger.info("Possible server is stopped:" + e.getMessage());
+            logger.warn("Possible server is stopped:" + e.getMessage());
         }
     }
 }
