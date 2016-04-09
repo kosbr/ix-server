@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,13 +14,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServiceHolder {
 
     private static final Logger logger = LogManager.getLogger(ServiceHolder.class);
+    private static final String SERVICE_PREFIX = "service.";
 
     private static ServiceHolder instance;
 
     private Map<String, Object> serviceMap = new ConcurrentHashMap<>();
 
-    public static void init() throws IOException {
-        instance = new ServiceHolder();
+    public static void init(Properties properties) throws IOException {
+        instance = new ServiceHolder(properties);
     }
 
     public static ServiceHolder getInstance() {
@@ -29,28 +29,34 @@ public class ServiceHolder {
         return instance;
     }
 
-    private ServiceHolder() throws IOException {
-        InputStream inputStream  = ServiceHolder.class.getClassLoader().getResourceAsStream("server.properties");
-        Properties properties = new Properties();
-        properties.load(inputStream);
-        logger.info("Properties files is loaded. Properties.size=" + properties.size());
+    private ServiceHolder(Properties properties) throws IOException {
         serviceMap = new ConcurrentHashMap<>();
-        properties.forEach((key, value) -> addInstanceToMap((String)key, (String) value));
+        properties.forEach((key, value) -> addInstanceToMap((String) key, (String) value));
     }
 
     private void addInstanceToMap(String key, String className) {
-        try {
-            Class<?> serviceClass = Class.forName(className);
-            Object instance = serviceClass.newInstance();
-            serviceMap.put(key, instance);
-        } catch (ClassNotFoundException e) {
-            logger.error(className + " is not found. Ignore");
-        } catch (Exception e) {
-            logger.error("Can't create instance of " + className + ". Ignore");
+        if (key.startsWith(SERVICE_PREFIX)) {
+            String serviceName = extractServiceName(key);
+            try {
+                Class<?> serviceClass = Class.forName(className);
+                Object instance = serviceClass.newInstance();
+                serviceMap.put(serviceName, instance);
+                logger.info(serviceClass + " instance was created");
+            } catch (ClassNotFoundException e) {
+                logger.error(className + " is not found. Ignore");
+            } catch (Exception e) {
+                logger.error("Can't create instance of " + className + ". Ignore");
+            }
         }
     }
 
     public Object getServiceByName(String key) {
         return serviceMap.get(key);
     }
+
+    private String extractServiceName(String key) {
+        int index = key.indexOf(SERVICE_PREFIX) + SERVICE_PREFIX.length();
+        return key.substring(index);
+    }
+
 }
