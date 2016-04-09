@@ -12,6 +12,7 @@ import ru.kos.ix.dto.Task;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 
@@ -62,10 +63,14 @@ public class ClientThread extends Thread {
 
                     @Override
                     public void onFailure(Throwable t) {
+                        Throwable cause = t;
+                        if (t instanceof InvocationTargetException) {
+                            cause = t.getCause();
+                        }
                         synchronized (os) {
-                            logger.error("Service error: " + t.getMessage(), t);
+                            logger.error("Service error: " + cause.getMessage(), cause);
                             try {
-                                AnsTask ansTask = new AnsTask(task.getId(), null, Status.ERROR, t.getMessage());
+                                AnsTask ansTask = new AnsTask(task.getId(), null, Status.ERROR, cause.getMessage());
                                 logger.info("Answer " + ansTask + " to client " + clientId);
                                 os.writeObject(ansTask);
                                 os.flush();
