@@ -24,6 +24,7 @@ public class AcceptThread extends Thread {
 
     @Override
     public void run() {
+        int currentClientId = 0;
         ExecutorService executorService = Executors.newCachedThreadPool();
         try {
             logger.info("Start accepting");
@@ -31,12 +32,12 @@ public class AcceptThread extends Thread {
             {
                 Socket clientSocket = serverSocket.accept();
                 logger.info("Socket was accepted " + clientSocket);
-                ClientThread clientThread = new ClientThread(clientSocket, executorService);
+                ClientThread clientThread = new ClientThread(currentClientId, clientSocket, executorService);
                 clientThread.start();
+                currentClientId++;
             }
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            logger.info("Possible server is stopped:" + e.getMessage());
         }
-
     }
 }

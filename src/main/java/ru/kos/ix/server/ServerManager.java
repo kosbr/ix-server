@@ -29,6 +29,7 @@ public class ServerManager {
         logger.info("Properties files is loaded. Properties.size=" + properties.size());
 
         ServiceHolder.init(properties);
+        ClientSocketHolder.init();
         ServerManager serverManager = new ServerManager(properties);
         serverManager.startServer();
     }
@@ -54,6 +55,7 @@ public class ServerManager {
         }
 
         logger.info("server is stopped");
+        ClientSocketHolder.getInstance().closeAll();
         serverSocket.close();
     }
 
