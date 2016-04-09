@@ -74,7 +74,7 @@ public class ClientThread extends Thread {
                 logger.info("Waiting for new tasks");
             }
         } catch (Exception e) {
-            logger.error("Possible client has closed connection", e);
+            logger.info("Possible client has closed connection: " + e.getMessage());
         } finally {
             try {
                 logger.info("Close socket " + socket);
