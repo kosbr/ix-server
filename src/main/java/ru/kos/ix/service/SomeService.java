@@ -21,7 +21,7 @@ public class SomeService {
     }
 
     public void error() {
-        throw new NullPointerException();
+        throw new NullPointerException("NPE");
     }
 
 }
