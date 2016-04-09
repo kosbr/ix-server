@@ -61,7 +61,7 @@ public class ServerManager {
         InputStream inputStream = new FileInputStream(statusFile);
         Properties properties = new Properties();
         properties.load(new BufferedInputStream(inputStream));
-        return new Boolean((String)properties.get(ACTIVE_PARAM));
+        return Boolean.parseBoolean(((String)properties.get(ACTIVE_PARAM)));
     }
 
 
