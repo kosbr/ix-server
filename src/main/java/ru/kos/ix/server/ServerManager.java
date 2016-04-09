@@ -20,8 +20,6 @@ public class ServerManager {
     private static final String STATUS_FILE_KEY = "status.file";
     private static final String ACTIVE_PARAM = "active";
 
-    private ServerSocket serverSocket;
-
     private Properties properties;
 
     public static void main(String[] args) throws Exception {
@@ -40,7 +38,7 @@ public class ServerManager {
     }
 
     public void startServer() throws IOException, InterruptedException {
-        serverSocket = new ServerSocket(3129, 0, InetAddress.getByName("localhost"));
+        ServerSocket serverSocket = new ServerSocket(3129, 0, InetAddress.getByName("localhost"));
         logger.info("server is started");
         AcceptThread acceptThread = new AcceptThread(serverSocket);
         acceptThread.start();
