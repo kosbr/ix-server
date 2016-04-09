@@ -2,7 +2,6 @@ package ru.kos.ix.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.kos.ix.ServiceHolder;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;

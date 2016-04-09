@@ -1,6 +1,5 @@
 package ru.kos.ix.server;
 
-import ru.kos.ix.ServiceHolder;
 import ru.kos.ix.dto.AnsTask;
 import ru.kos.ix.dto.Task;
 
