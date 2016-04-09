@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Константин on 08.04.2016.
@@ -22,13 +24,14 @@ public class AcceptThread extends Thread {
 
     @Override
     public void run() {
+        ExecutorService executorService = Executors.newCachedThreadPool();
         try {
             logger.info("Start accepting");
             while(true)
             {
                 Socket clientSocket = serverSocket.accept();
                 logger.info("Socket was accepted " + clientSocket);
-                ClientThread clientThread = new ClientThread(clientSocket);
+                ClientThread clientThread = new ClientThread(clientSocket, executorService);
                 clientThread.start();
             }
         } catch (IOException e) {

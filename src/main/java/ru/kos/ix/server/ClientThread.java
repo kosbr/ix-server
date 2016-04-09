@@ -13,7 +13,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by Константин on 08.04.2016.
@@ -24,8 +23,11 @@ public class ClientThread extends Thread {
 
     private Socket socket;
 
-    public ClientThread(Socket socket) {
+    private ExecutorService executorService;
+
+    public ClientThread(Socket socket, ExecutorService executorService) {
         this.socket = socket;
+        this.executorService = executorService;
     }
 
     @Override
@@ -58,16 +60,16 @@ public class ClientThread extends Thread {
                         synchronized (os) {
                             logger.error("Service error: " + t.getMessage(), t);
                             try {
-                                logger.info("Answer " + t);
-                                os.writeObject(t);
+                                AnsTask ansTask = new AnsTask(task.getId(), null, "Error: " + t.getMessage());
+                                logger.info("Answer " + ansTask);
+                                os.writeObject(ansTask);
                                 os.flush();
                             } catch (IOException e) {
-                                System.out.println("Rrror");
+                                logger.error(e.getMessage(), e);
                             }
                         }
                     }
                 });
-                ExecutorService executorService = Executors.newCachedThreadPool();
                 executorService.execute(future);
                 logger.info("Waiting for new tasks");
             }

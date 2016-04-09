@@ -2,6 +2,7 @@ package ru.kos.ix.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.kos.ix.ServiceHolder;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -17,6 +18,7 @@ public class ServerManager {
     private ServerSocket serverSocket;
 
     public static void main(String[] args) throws Exception {
+        ServiceHolder.init();
         ServerManager serverManager = new ServerManager();
         serverManager.startServer();
     }
