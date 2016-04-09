@@ -23,6 +23,7 @@ public class ServerManager {
     private Properties properties;
 
     public static void main(String[] args) throws Exception {
+        int port = Integer.parseInt(args[0]);
         InputStream inputStream  = ServiceHolder.class.getClassLoader().getResourceAsStream("server.properties");
         Properties properties = new Properties();
         properties.load(inputStream);
@@ -31,16 +32,16 @@ public class ServerManager {
         ServiceHolder.init(properties);
         ClientSocketHolder.init();
         ServerManager serverManager = new ServerManager(properties);
-        serverManager.startServer();
+        serverManager.startServer(port);
     }
 
     public ServerManager(Properties properties)  {
         this.properties = properties;
     }
 
-    public void startServer() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(3129, 0, InetAddress.getByName("localhost"));
-        logger.info("server is started");
+    public void startServer(int port) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName("localhost"));
+        logger.info("server is started port " + port);
         AcceptThread acceptThread = new AcceptThread(serverSocket);
         acceptThread.start();
 
