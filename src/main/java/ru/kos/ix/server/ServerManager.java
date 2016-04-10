@@ -59,7 +59,7 @@ public class ServerManager {
      * @throws IOException
      */
     public void startServer(int port) throws IOException {
-        ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getByName("localhost"));
+        ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getLocalHost());
         logger.info("server is started port " + port);
         AcceptThread acceptThread = new AcceptThread(serverSocket);
         acceptThread.start();
