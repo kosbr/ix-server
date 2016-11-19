@@ -90,5 +90,16 @@ A server must return result with parameters:
 * id=14
 * answer = 'HELLO'
  
+## Server Implementation description
+
+Main thread launches server (start listening to a port). After this AcceptThread is started for client
+accepting. The major part of time it is blocked on accept method. When a client connects AcceptThread
+creates a unique client id and new thread: ClientThread. One ClientThread corresponds to one client.
+
+The main action of ClientThread is waiting for a request from client. After client sends a request with 
+command it takes a thread from common pool of threads and delegate it command handling. So it doesn't block
+and able to get more requests. After command handling is finished, the thread that have done it sends 
+result back to client. A result also can be an error if something is wrong.
  
+![Threads](threads.jpg) 
  
