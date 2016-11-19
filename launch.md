@@ -1,7 +1,9 @@
 ## How to launch
 
 1)Clone client (https://github.com/kosbr/ix-client)
+
 2)Clone server (https://github.com/kosbr/ix-server)
+
 3)Create file with one line:
 
 ```
