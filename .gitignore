@@ -4,3 +4,5 @@ gradlew.bat
 gradle/
 .gradle/
 build/
+status
+logfile.log
