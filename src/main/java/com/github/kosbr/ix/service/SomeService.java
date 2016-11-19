@@ -1,4 +1,4 @@
-package ru.kos.ix.service;
+package com.github.kosbr.ix.service;
 
 /**
  * Created by kosbr on 08.04.2016.

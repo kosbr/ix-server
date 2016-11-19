@@ -1,13 +1,13 @@
-package ru.kos.ix.server;
+package com.github.kosbr.ix.server;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFutureTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.kos.ix.dto.AnsTask;
-import ru.kos.ix.dto.Status;
-import ru.kos.ix.dto.Task;
+import com.github.kosbr.ix.dto.AnsTask;
+import com.github.kosbr.ix.dto.Status;
+import com.github.kosbr.ix.dto.Task;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

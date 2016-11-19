@@ -1,8 +1,8 @@
-package ru.kos.ix.server;
+package com.github.kosbr.ix.server;
 
-import ru.kos.ix.dto.AnsTask;
-import ru.kos.ix.dto.Status;
-import ru.kos.ix.dto.Task;
+import com.github.kosbr.ix.dto.AnsTask;
+import com.github.kosbr.ix.dto.Status;
+import com.github.kosbr.ix.dto.Task;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;

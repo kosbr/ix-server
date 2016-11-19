@@ -1,4 +1,4 @@
-package ru.kos.ix.dto;
+package com.github.kosbr.ix.dto;
 
 import com.google.common.base.MoreObjects;
 

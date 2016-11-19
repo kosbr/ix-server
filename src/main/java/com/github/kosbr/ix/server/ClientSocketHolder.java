@@ -1,4 +1,4 @@
-package ru.kos.ix.server;
+package com.github.kosbr.ix.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,4 +1,4 @@
-package ru.kos.ix.dto;
+package com.github.kosbr.ix.dto;
 
 /**
  * Created by kosbr on 09.04.2016.
