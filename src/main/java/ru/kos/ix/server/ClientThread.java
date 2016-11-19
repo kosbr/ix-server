@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * Thread that belongs to one client. It waits requests and delegates tasks to other threads.
- * Created by Константин on 08.04.2016.
+ * Created by kosbr on 08.04.2016.
  */
 public class ClientThread extends Thread {
 

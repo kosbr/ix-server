@@ -5,7 +5,7 @@ import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 
 /**
- * Created by Константин on 08.04.2016.
+ * Created by kosbr on 08.04.2016.
  */
 public class AnsTask implements Serializable {
 

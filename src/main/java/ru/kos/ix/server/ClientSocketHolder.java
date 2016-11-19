@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Singleton. Keeps sockets of every client. <br/>
  * It is necessary for server shut down to close all sockets. <br/>
- * Created by Константин on 09.04.2016.
+ * Created by kosbr on 09.04.2016.
  */
 public final class ClientSocketHolder {
 

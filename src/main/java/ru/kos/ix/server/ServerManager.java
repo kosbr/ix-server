@@ -21,7 +21,7 @@ import java.util.Properties;
  * 5)When active param in status.file (server.properties) becomes not true, server starts prepare shutdown <br/>
  * 6)Close all open client sockets <Br/>
  * 7)Stop server <Br/>
- * Created by Константин on 08.04.2016.
+ * Created by kosbr on 08.04.2016.
  */
 public class ServerManager {
 

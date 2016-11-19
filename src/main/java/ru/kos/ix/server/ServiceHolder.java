@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Singleton. The creator and keeper of services. <br/>
- * Created by Константин on 09.04.2016.
+ * Created by kosbr on 09.04.2016.
  */
 public final class ServiceHolder {
 
