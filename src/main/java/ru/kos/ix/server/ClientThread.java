@@ -22,13 +22,13 @@ import java.util.concurrent.ExecutorService;
  */
 public class ClientThread extends Thread {
 
-    private static final Logger logger = LogManager.getLogger(ClientThread.class);
+    private static final Logger LOGGER = LogManager.getLogger(ClientThread.class);
 
-    private int clientId;
+    private final int clientId;
 
-    private Socket socket;
+    private final Socket socket;
 
-    private ExecutorService executorService;
+    private final ExecutorService executorService;
 
     /**
      * Creates client thread
@@ -36,7 +36,7 @@ public class ClientThread extends Thread {
      * @param socket Client socket
      * @param executorService Executor service for task threads
      */
-    public ClientThread(int clientId, Socket socket, ExecutorService executorService) {
+    public ClientThread(final int clientId, final Socket socket, final ExecutorService executorService) {
         this.clientId = clientId;
         this.socket = socket;
         this.executorService = executorService;
@@ -45,60 +45,60 @@ public class ClientThread extends Thread {
 
     @Override
     public void run() {
-        logger.debug("Start thread for client" + clientId);
+        LOGGER.debug("Start thread for client" + clientId);
         try {
             ObjectInputStream is = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
             while (true) {
-                Task task = (Task)is.readObject();
-                logger.info("Get " + task + " from client" + clientId);
+                Task task = (Task) is.readObject();
+                LOGGER.info("Get " + task + " from client" + clientId);
                 TaskCallable taskCallable = new TaskCallable(task);
                 ListenableFutureTask<AnsTask> future = ListenableFutureTask.create(taskCallable);
                 Futures.addCallback(future, new FutureCallback<AnsTask>() {
                     @Override
-                    public void onSuccess(AnsTask result) {
+                    public void onSuccess(final AnsTask result) {
                         synchronized (os) {
                             try {
-                                logger.info("Answer " + result + " to client " + clientId);
+                                LOGGER.info("Answer " + result + " to client " + clientId);
                                 os.writeObject(result);
                                 os.flush();
                             } catch (IOException e) {
-                                logger.error(e.getMessage(), e);
+                                LOGGER.error(e.getMessage(), e);
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(Throwable t) {
+                    public void onFailure(final Throwable t) {
                         Throwable cause = t;
                         if (t instanceof InvocationTargetException) {
                             cause = t.getCause();
                         }
                         synchronized (os) {
-                            logger.error("Service error: " + cause.getMessage(), cause);
+                            LOGGER.error("Service error: " + cause.getMessage(), cause);
                             try {
                                 AnsTask ansTask = new AnsTask(task.getId(), null, Status.ERROR, cause.getMessage());
-                                logger.info("Answer " + ansTask + " to client " + clientId);
+                                LOGGER.info("Answer " + ansTask + " to client " + clientId);
                                 os.writeObject(ansTask);
                                 os.flush();
                             } catch (IOException e) {
-                                logger.error(e.getMessage(), e);
+                                LOGGER.error(e.getMessage(), e);
                             }
                         }
                     }
                 });
                 executorService.execute(future);
-                logger.debug("Waiting for new tasks from client" + clientId);
+                LOGGER.debug("Waiting for new tasks from client" + clientId);
             }
         } catch (Exception e) {
-            logger.warn("Possible client has closed connection or server is stopping: " + e.getMessage());
+            LOGGER.warn("Possible client has closed connection or server is stopping: " + e.getMessage());
         } finally {
             try {
-                logger.debug("Close socket for client " + clientId);
+                LOGGER.debug("Close socket for client " + clientId);
                 socket.close();
                 ClientSocketHolder.getInstance().remove(clientId);
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                LOGGER.error(e.getMessage(), e);
             }
         }
     }

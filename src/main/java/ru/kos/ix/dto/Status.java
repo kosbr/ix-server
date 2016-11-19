@@ -9,5 +9,5 @@ public enum Status {
     OK_VOID,
     ERROR;
 
-    private final static long serialVersionUID = -7401961224124280149l;
+    private static final long serialVersionUID = -7401961224124280149L;
 }

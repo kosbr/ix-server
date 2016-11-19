@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class ClientSocketHolder {
 
-    private static final Logger logger = LogManager.getLogger(ClientSocketHolder.class);
+    private static final Logger LOGGER = LogManager.getLogger(ClientSocketHolder.class);
 
     private static ClientSocketHolder instance;
 
@@ -48,7 +48,7 @@ public final class ClientSocketHolder {
      * @param socket
      * @return
      */
-    public Socket put(Integer clientId, Socket socket) {
+    public Socket put(final Integer clientId, final Socket socket) {
         return socketMap.put(clientId, socket);
     }
 
@@ -59,7 +59,7 @@ public final class ClientSocketHolder {
      * @param clientId
      * @return
      */
-    public Socket remove(Integer clientId) {
+    public Socket remove(final Integer clientId) {
         return socketMap.remove(clientId);
     }
 
@@ -71,12 +71,12 @@ public final class ClientSocketHolder {
         socketMap.forEach(this::closeSocket);
     }
 
-    private void closeSocket(Integer clientId, Socket socket) {
+    private void closeSocket(final Integer clientId, final Socket socket) {
         try {
-            logger.info("Close socket for client:" + clientId);
+            LOGGER.info("Close socket for client:" + clientId);
             socket.close();
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 }

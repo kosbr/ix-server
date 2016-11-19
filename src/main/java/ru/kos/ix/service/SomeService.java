@@ -5,15 +5,15 @@ package ru.kos.ix.service;
  */
 public class SomeService {
 
-    public String toUpper(String str) {
+    public String toUpper(final String str) {
         return str.toUpperCase();
     }
 
-    public Integer plus(Integer a, Integer b) {
+    public Integer plus(final Integer a, final Integer b) {
         return a + b;
     }
 
-    public void sleep(Integer ms) {
+    public void sleep(final Integer ms) {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException ignore) {

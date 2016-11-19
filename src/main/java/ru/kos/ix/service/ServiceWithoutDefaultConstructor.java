@@ -5,7 +5,7 @@ package ru.kos.ix.service;
  */
 public class ServiceWithoutDefaultConstructor {
 
-    public ServiceWithoutDefaultConstructor(String name) {
+    public ServiceWithoutDefaultConstructor(final String name) {
     }
 
 

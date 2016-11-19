@@ -9,14 +9,15 @@ import java.io.Serializable;
  */
 public class AnsTask implements Serializable {
 
-    private final static long serialVersionUID = -7401961224124280149l;
+    private static final long serialVersionUID = -7401961224124280149L;
 
-    private Integer id;
-    private Object result;
-    private String statusInfo;
-    private Status status;
+    private final Integer id;
+    private final Object result;
+    private final String statusInfo;
+    private final Status status;
 
-    public AnsTask(Integer id, Object result, Status status, String statusInfo) {
+    public AnsTask(final Integer id, final Object result,
+                   final Status status, final String statusInfo) {
         this.id = id;
         this.result = result;
         this.status = status;

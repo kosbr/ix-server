@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class Task implements Serializable {
 
-    private final static long serialVersionUID = -7401961224124280149l;
+    private static final long serialVersionUID = -7401961224124280149L;
 
     private Integer id;
     private String serviceName;
@@ -20,7 +20,7 @@ public class Task implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -28,7 +28,7 @@ public class Task implements Serializable {
         return serviceName;
     }
 
-    public void setServiceName(String serviceName) {
+    public void setServiceName(final String serviceName) {
         this.serviceName = serviceName;
     }
 
@@ -36,7 +36,7 @@ public class Task implements Serializable {
         return methodName;
     }
 
-    public void setMethodName(String methodName) {
+    public void setMethodName(final String methodName) {
         this.methodName = methodName;
     }
 
@@ -44,7 +44,7 @@ public class Task implements Serializable {
         return arguments;
     }
 
-    public void setArguments(Object[] arguments) {
+    public void setArguments(final Object[] arguments) {
         this.arguments = arguments;
     }
 

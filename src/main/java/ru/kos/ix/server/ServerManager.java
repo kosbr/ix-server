@@ -25,9 +25,10 @@ import java.util.Properties;
  */
 public class ServerManager {
 
-    private static final Logger logger = LogManager.getLogger(ServerManager.class);
+    private static final Logger LOGGER = LogManager.getLogger(ServerManager.class);
     private static final String STATUS_FILE_KEY = "status.file";
     private static final String ACTIVE_PARAM = "active";
+    private static final int STATUS_MONITORING_INTERVAL_MS = 500;
 
     private Properties properties;
 
@@ -36,12 +37,12 @@ public class ServerManager {
      * @param args
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         int port = Integer.parseInt(args[0]);
         InputStream inputStream  = ServiceHolder.class.getClassLoader().getResourceAsStream("server.properties");
         Properties properties = new Properties();
         properties.load(inputStream);
-        logger.info("Properties files is loaded. Properties.size=" + properties.size());
+        LOGGER.info("Properties files is loaded. Properties.size=" + properties.size());
 
         ServiceHolder.init(properties);
         ClientSocketHolder.init();
@@ -49,7 +50,7 @@ public class ServerManager {
         serverManager.startServer(port);
     }
 
-    public ServerManager(Properties properties)  {
+    public ServerManager(final Properties properties)  {
         this.properties = properties;
     }
 
@@ -58,9 +59,9 @@ public class ServerManager {
      * @param port
      * @throws IOException
      */
-    public void startServer(int port) throws IOException {
+    public void startServer(final int port) throws IOException {
         ServerSocket serverSocket = new ServerSocket(port, 0, InetAddress.getLocalHost());
-        logger.info("server is started port " + port);
+        LOGGER.info("server is started port " + port);
         AcceptThread acceptThread = new AcceptThread(serverSocket);
         acceptThread.start();
 
@@ -68,13 +69,13 @@ public class ServerManager {
 
         try {
             while (isWorking(statusFile)) {
-                Thread.sleep(500);
+                Thread.sleep(STATUS_MONITORING_INTERVAL_MS);
             }
         } catch (IOException | InterruptedException e) {
-            logger.error("Can't read server.properties " + e.getMessage());
+            LOGGER.error("Can't read server.properties " + e.getMessage());
         }
 
-        logger.info("server is stopped");
+        LOGGER.info("server is stopped");
         ClientSocketHolder.getInstance().closeAll();
         serverSocket.close();
     }
@@ -85,11 +86,11 @@ public class ServerManager {
      * @return
      * @throws IOException
      */
-    private boolean isWorking(String statusFile) throws IOException {
+    private boolean isWorking(final String statusFile) throws IOException {
         InputStream inputStream = new FileInputStream(statusFile);
         Properties properties = new Properties();
         properties.load(new BufferedInputStream(inputStream));
-        return Boolean.parseBoolean(((String)properties.get(ACTIVE_PARAM)));
+        return Boolean.parseBoolean(((String) properties.get(ACTIVE_PARAM)));
     }
 
 
