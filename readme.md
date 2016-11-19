@@ -81,7 +81,7 @@ public class SomeService {
  and configuration file:
  
 ```
-service.some=ru.kos.ix.service.SomeService
+service.some=com.github.kosbr.ix.service.SomeService
 ```
  
 If a client sends a command with following parameters:
