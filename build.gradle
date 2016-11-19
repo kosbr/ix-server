@@ -1,5 +1,5 @@
-group 'ru.kos.ix.server'
-version '1.0-SNAPSHOT'
+group 'com.github.kosbr.ix.server'
+version '1.0'
 
 apply plugin: 'java'
 apply plugin: 'checkstyle'
@@ -22,7 +22,7 @@ dependencies {
 
 jar {
     manifest {
-        attributes "Main-Class": "ru.kos.ix.server.ServerManager"
+        attributes "Main-Class": "com.github.kosbr.ix.server.ServerManager"
     }
 
     from {
